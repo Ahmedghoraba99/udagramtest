@@ -47,8 +47,10 @@ jobs:
           command: |
             echo "Building the backend API"
             npm run api:build
+  Deploy:
+    Steps:
       - run:
-          name: Deploy App
+         name: Deploy App
           # TODO: Install, build, deploy in both apps
           command: |
             echo "Deploying FE and BE"
@@ -59,8 +61,8 @@ jobs:
           command: |
             echo "setenv"
             npm run setenv
-
 workflows:
   udagram:
     jobs:
-      - buildAndDeploy
+      - build
+      - Deploy
