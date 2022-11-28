@@ -36,12 +36,6 @@ jobs:
           command: |
             echo "Linting the frontend"
             npm run frontend:lint
-      # TODO: Lint the api
-      - run:
-          name: API Lint
-          command: |
-            echo "Linting the frontend"
-            npm run api:lint
       # TODO: Build the frontend app
       - run:
           name: Front-End Build
