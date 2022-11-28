@@ -6,7 +6,7 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
   # different jobs are calles later in the workflows sections
 jobs:
-  build:
+  buildAndDeploy:
     docker:
       # the base image can run most needed actions with orbs
       - image: "cimg/node:14.15"
@@ -48,7 +48,7 @@ jobs:
             echo "Building the backend API"
             npm run api:build
       - run:
-         name: Deploy App
+          name: Deploy App
           # TODO: Install, build, deploy in both apps
           command: |
             echo "Deploying FE and BE"
@@ -62,4 +62,4 @@ jobs:
 workflows:
   udagram:
     jobs:
-      - build
+      - buildAndDeploy
