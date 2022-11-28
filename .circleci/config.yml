@@ -59,10 +59,7 @@ jobs:
           command: |
             echo "setenv"
             npm run setenv
-  Deploy:
-
 workflows:
   udagram:
     jobs:
       - build
-      - Deploy
