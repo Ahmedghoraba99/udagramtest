@@ -14,6 +14,9 @@ jobs:
       # install node and checkout code
       - node/install:
           node-version: "14.15"
+      - eb/setup
+      - aws-cli/setup
+      - checkout
       - checkout
       # Use root level package.json to install dependencies in the frontend app
       - run:
@@ -24,41 +27,26 @@ jobs:
             echo "NPM --version" 
             echo $(npm --version)
             npm run frontend:install
-      # TODO: Install dependencies in the the backend API
       - run:
           name: Install API Dependencies
           command: |
             echo "Installing dependencies in the the backend API  "
             npm run api:install
-      # TODO: Lint the frontend
       - run:
           name: Front-End Lint
           command: |
             echo "Linting the frontend"
             npm run frontend:lint
-      # TODO: Build the frontend app
       - run:
           name: Front-End Build
           command: |
             echo "Building the frontend app"
             npm run frontend:build
-      # TODO: Build the backend API
       - run:
           name: API Build
           command: |
             echo "Building the backend API"
             npm run api:build
-  # deploy step will run only after manual approval
-  deploy:
-    docker:
-      - image: "cimg/base:stable"
-      # more setup needed for aws, node, elastic beanstalk
-    steps:
-      - node/install:
-          node-version: "14.15"
-      - eb/setup
-      - aws-cli/setup
-      - checkout
       - run:
           name: Deploy App
           # TODO: Install, build, deploy in both apps
@@ -70,19 +58,10 @@ jobs:
           # TODO: Install, build, deploy in both apps
           command: |
             echo "setenv"
-            npm run deploy
+            npm run setenv
+
 workflows:
   udagram:
     jobs:
       - build
-      - hold:
-          filters:
-            branches:
-              only:
-                - master
-          type: approval
-          requires:
-            - build
-      - deploy:
-          requires:
-            - hold
+      - deploy
